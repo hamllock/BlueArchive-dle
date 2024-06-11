@@ -16,11 +16,6 @@ function App() {
   const [student, setStudent] = useState(students[0]);
   const [local] = useState<Localization>(locals);
 
-  useEffect(() => {
-    setStudent(students[count]);
-    console.log("student:", students[count]);
-  }, [count]);
-  console.log("local:", local);
   const nextStudent = () => {
     setCount((prevCount) => (prevCount + 1) % students.length);
   };
@@ -28,6 +23,14 @@ function App() {
   const randStudent = () => {
     setCount(Math.floor(Math.random() * students.length));
   };
+
+  useEffect(() => {
+    randStudent();
+  }, []);
+
+  useEffect(() => {
+    setStudent(students[count]);
+  }, [count]);
 
   return (
     <>
