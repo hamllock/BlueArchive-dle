@@ -4,52 +4,48 @@ import locals from "../data/localization.json";
 import Cell from "./Cell";
 import { Students, Localization } from "../types";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const useStudent = (students: Students, locals: Localization) => {
-  const [count, setCount] = useState(0);
-  const [student, setStudent] = useState(students[0]);
+  const [count, setCount] = useState(
+    Math.floor(Math.random() * students.length)
+  );
+  const [studentList, setStudentList] = useState<Students>([]);
   const [local] = useState(locals);
 
-  const nextStudent = () => {
-    setCount((prevCount) => (prevCount + 1) % students.length);
+  const addStudent = () => {
+    setStudentList((prevList) => [...prevList, students[count]]);
+    setCount(Math.floor(Math.random() * students.length));
   };
 
-  useEffect(() => {
-    setStudent(students[count]);
-  }, [count]);
-
   return {
-    student,
+    studentList,
     local,
-    setCount,
-    nextStudent,
+    addStudent,
   };
 };
 
 const Table = () => {
-  const { student, local, setCount, nextStudent } = useStudent(
-    students,
-    locals
-  );
+  const { studentList, local, addStudent } = useStudent(students, locals);
   return (
     <>
       <div className="flex flex-col gap-4 items-center h-screen w-screen">
         <div className="flex flex-row gap-2">
-          <button onClick={() => setCount(0)}>Reset (ID: {student.Id})</button>
-          <button onClick={nextStudent}>Next student</button>
+          <button onClick={addStudent}>Add student</button>
         </div>
         <div>
-          <div className="flex flex-row">
-            <Cell image={`./icon/${student.Id}.webp`} />
-            <Cell content={`${student.FamilyName} ${student.Name}`} />
-            <Cell content={`${local.SchoolLong[student.School]}`} />
-            <Cell content={`${local.Club[student.Club]}`} />
-            <Cell content={`${local.SquadType[student.SquadType]}`} />
-            <Cell content={`${local.TacticRole[student.TacticRole]}`} />
-            <Cell content={`${local.BulletType[student.BulletType]}`} />
-            <Cell content={`${local.ArmorTypeLong[student.ArmorType]}`} />
-          </div>
+          {studentList.map((student, index) => (
+            <div key={index} className="flex flex-row">
+              <Cell image={`./icon/${student.Id}.webp`} />
+              <Cell content={`${student.FamilyName} ${student.Name}`} />
+              <Cell content={`${local.SchoolLong[student.School]}`} />
+              <Cell content={`${local.Club[student.Club]}`} />
+              <Cell content={`${local.SquadType[student.SquadType]}`} />
+              <Cell content={`${local.TacticRole[student.TacticRole]}`} />
+              <Cell content={`${local.BulletType[student.BulletType]}`} />
+              <Cell content={`${local.ArmorTypeLong[student.ArmorType]}`} />
+            </div>
+          ))}
         </div>
       </div>
     </>
