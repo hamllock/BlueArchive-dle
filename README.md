@@ -17,6 +17,7 @@ This is a React + TypeScript + Vite project.
 
 In the project directory, you can run:
 
+- `npm i`: Installs the neccessary packages.
 - `npm run dev`: Starts the development server.
 - `npm run build`: Builds the application for production.
 - `npm run lint`: Lints the project using ESLint.
