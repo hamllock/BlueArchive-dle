@@ -1,10 +1,35 @@
-import Cell from "./Cell";
-import local from "../data/localization.json";
-import { Students, Student, Localization } from "../types";
+import Cell from './Cell';
+import local from '../data/localization.json';
+import { Students, Student, Localization } from '../types';
 
+const getArmorTypeColor = (armor: string) => {
+  switch (armor) {
+    case 'LightArmor':
+      return 'text-BlueArchiveRED';
+    case 'HeavyArmor':
+      return 'text-BlueArchiveYELLOW';
+    case 'Unarmed':
+      return 'text-BlueArchiveBLUE';
+    case 'ElasticArmor':
+      return 'text-BlueArchivePURPLE';
+  }
+};
+
+const getBulletTypeColor = (bullet: string) => {
+  switch (bullet) {
+    case 'Explosion':
+      return 'text-BlueArchiveRED';
+    case 'Pierce':
+      return 'text-BlueArchiveYELLOW';
+    case 'Mystic':
+      return 'text-BlueArchiveBLUE';
+    case 'Sonic':
+      return 'text-BlueArchivePURPLE';
+  }
+};
 const Table: React.FC<{ studentList: Students; randStudent: Student }> = ({
   studentList,
-  randStudent,
+  randStudent
 }) => {
   const localization = local as Localization; // Add this line
 
@@ -16,44 +41,37 @@ const Table: React.FC<{ studentList: Students; randStudent: Student }> = ({
             <Cell image={`./icon/${student.Id}.webp`} />
             <Cell
               content={`${student.FamilyName} ${student.Name}`}
-              variant={
-                randStudent.Name === student.Name &&
-                randStudent.FamilyName === student.FamilyName
-                  ? "green"
-                  : "red"
+              state={
+                randStudent.Name === student.Name && randStudent.FamilyName === student.FamilyName
+                  ? 'green'
+                  : 'red'
               }
             />
             <Cell
               content={`${localization.SchoolLong[student.School]}`}
-              variant={randStudent.School === student.School ? "green" : "red"}
+              state={randStudent.School === student.School ? 'green' : 'red'}
             />
             <Cell
               content={`${localization.Club[student.Club]}`}
-              variant={randStudent.Club === student.Club ? "green" : "red"}
+              state={randStudent.Club === student.Club ? 'green' : 'red'}
             />
             <Cell
               content={`${localization.SquadType[student.SquadType]}`}
-              variant={
-                randStudent.SquadType === student.SquadType ? "green" : "red"
-              }
+              state={randStudent.SquadType === student.SquadType ? 'green' : 'red'}
             />
             <Cell
               content={`${localization.TacticRole[student.TacticRole]}`}
-              variant={
-                randStudent.TacticRole === student.TacticRole ? "green" : "red"
-              }
+              state={randStudent.TacticRole === student.TacticRole ? 'green' : 'red'}
             />
             <Cell
               content={`${localization.BulletType[student.BulletType]}`}
-              variant={
-                randStudent.BulletType === student.BulletType ? "green" : "red"
-              }
+              state={randStudent.BulletType === student.BulletType ? 'green' : 'red'}
+              textColor={getBulletTypeColor(student.BulletType)}
             />
             <Cell
               content={`${localization.ArmorTypeLong[student.ArmorType]}`}
-              variant={
-                randStudent.ArmorType === student.ArmorType ? "green" : "red"
-              }
+              state={randStudent.ArmorType === student.ArmorType ? 'green' : 'red'}
+              textColor={getArmorTypeColor(student.ArmorType)}
             />
           </div>
         ))}
