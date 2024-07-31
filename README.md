@@ -10,4 +10,5 @@ Heavily inspired by games such as Loldle.
 
 # TODO
 • Migrate from Vite to NextJS
+
 • Publish onto a website
